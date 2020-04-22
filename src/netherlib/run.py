@@ -3,6 +3,14 @@ from os.path import abspath
 from flask import Flask, send_from_directory
 from .build import build
 from toml import load
+from threading import Thread
+from time import sleep
+
+
+def rebuild(args):
+    while True:
+        build(args)
+        sleep(1)
 
 
 def run(args):
@@ -18,5 +26,5 @@ def run(args):
     def index():
         return send_from_directory(static, 'index.html')
 
-    build(args)
+    Thread(target=rebuild, args=(args, )).start()
     app.run(port=3000, debug=True)
