@@ -21,6 +21,7 @@ def run(args):
     app = Flask(config['package']['name'],
                 static_url_path='/',
                 static_folder=static)
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
     @app.route('/')
     def index():
